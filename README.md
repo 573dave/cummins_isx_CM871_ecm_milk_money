@@ -1,22 +1,16 @@
-# Hacking Your ECM using Calterm III
-## Warning
-DO NOT USE THE BACKUP/RESTORE PARAMETERS OPTION IN CALTERM!!!!
-When downloading your cal file to your engine, MAKE SURE THE OPTION TO BACKUP/RESTORE PARAMETERS IS NOT CHECKED. Some of the features and parameters HAVE TO BE EDITED, and are part of the delete. Restoring your features using calterm will overwrite them back to their original values and could make your cal unstable.
-## Verify Your Calibration Before Removing Any Hardware
-VERIFY YOUR CALIBRATION BEFORE REMOVING ANY HARDWARE!!!!!!!!!
-You should ABSOLUTELY verify your 'Milk Money' delete BEFORE REMOVING YOUR HARDWARE!, and putting the truck back on the road. Start the truck and verify your VGT position!. Make sure it is at 5% during idle, unless you have specifically set it somewhere else. This is very important. If you have done everything right, and your VGT position is above 69%, then something is very wrong. A couple of people have given me feedback, saying that a bad cal can be corrected by NOT using the features and parameters option during a download. Others have reported that it can be corrected by using an older cal for your engine, then editing that instead. Sometimes as old as a 2011 file. If your engine is one of the few that end up with a bad cal, downgrade your engine software.
-## Update Read
-There has been parameter changes and additions in this update. Read the document carefully!!!!!!!!
-This document is an ongoing process, Check regularly for updates!
-## Introduction to Calterm Software
-I am by no means an expert on this Calterm software, but I do know that there seems to be a serious lack of help out there on how to use this stuff. It claims it is an engineering development tool used to monitor ECM's for Cummins engines with the ability to alter the calibration data. Well, It will do just that, but the problem is that it is not very friendly and the help files are vague at best.
-## Setting Up Calterm
-The process that I am about to share doesn't come from any formal training, but rather by the hours and hours spent via trial and error trying to figure this stuff out, and the bold willingness to risk my truck and its ECM for the purpose of engine exploration and the pursuit of the all mighty MPG. My truck is a Pro-star with an ISX that has EGR and DPF. The ECM is a CM871, and the Calibration that was in my engine was the original from when the truck was new.
-## Step-by-Step Guide to Setting Up Calterm
-### Installing Drivers
-I have an Inline-5 Adapter, so I installed the drivers for that and used a generic, but good quality USB-TO-RS232 adapter from Radio Shack to get the adapter set up on COM2 (I had to also disable COM2 in the BIOS as well). Yes, I could have used the USB cord for the inline adapter, but I found that the communications is much more stable and reliable using the RS232.
-### Editing the Calterm_3.lic File
-Running the Calterm software, I checked under 'Options' and found that I had NO privileges, so I closed the program and hacked the `Calterm_3.lic` file. I just simply added the following to the bottom of the file and made it look like this...
+# Hacking your ECM using Calterm III
+##  DO NOT USE THE BACKUP/RESTORE PARAMATERS OPTION IN CALTERM!!!!
+When Downloading your cal file to your engine, MAKE SURE THE OPTION TO BACKUP/RESTORE PARAMETERS IS NOT CHECKED. Some of the features and parameters HAVE TO BE EDITED, and are part of the delete. Restoring your features using calterm will overwrite them back to their origonal values and could make your cal unstable.
+
+## VERIFY YOUR CALIBRATION BEFORE REMOVING ANY HARDWARE!!!!!!!!!
+You should ABSOLUTELY verify your 'Milk Money' delete BRFORE REMOVING YOUR HARDWARE!, and putting the truck back on the road. Start the truck and verify your VGT position!. Make sure it is at 5% during idle, unless you have specifically set it somewhere else. This is very important. If you have done everything right, and your VGT position is above 69%, then something is very wrong. A couple of people have given me feedback, saying that a bad cal can be corrected by NOT using the features and paramaters option during a download. Others have reported that it can be corrected by using an older cal for your engine, then editing that instead. Sometimes as old as a 2011 file. If your engine is one of the few that end up with a bad cal, downgrade your engine software.
+There has been parameter changes and additions in this Update Read the document carefully!!!!!!!!
+
+## Using Calterm
+I am by no means an expert on this Calterm software, but I do know that there seems to be a serious lack of help out there on how to use this stuff. It claims it is an engineering development tool used to monitor ECM's for Cummins engines with the ability to alter the calibration data. Well, It will do just that, but the problem is that it is not very friendly and the help files are vague at best. 
+The process that I am about to share doesn't come from any formal training, but rather by the hours and hours spent via trial and error trying to figure this stuff out, and the bold willingness to risk my truck and its ECM for the purpose of engine exploration and the pursuit of the all mighty MPG. My truck is a Pro-star with an ISX that has EGR and DPF. The ECM is a CM871, and the Calibration that was in my engine was the original from when the truck was new. I set up Insite 7 and Calterm 3.6. and got them registered (not going into detail about that). 
+I have an Inline-5 Adapter, so I installed the drivers for that and used a generic, but good quality USB-TO-RS232 adapter from Radio Shack to get the adapter set up on COM2 (I had to also disable COM2 in the BIOS as well). Yes, I could have used the USB cord for the inline adapter, but I found that the communications is much more stable and reliable using the RS232. Running the Calterm software, I checked under 'Options' and found that I had NO privileges, so I closed the program and hacked the Calterm_3.lic
+file. I just simply added the following to the bottom of the file and made it look like this...
 ```
 <LicenceFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Products available="AllProducts" />
@@ -50,37 +44,29 @@ Running the Calterm software, I checked under 'Options' and found that I had NO 
   <ProductGroup available="" />
 </LicenceFile>
 ```
-## Unlocking and Editing the ECM
-### Step 1: Upgrade Calterm and Firmware
-Ensure your Inline firmware is 5.46 and Calterm is 3.6.008 (Firmware 5.32 requires Calterm 3.6.007)
-If necessary, upgrade Calterm to match the INLINE firmware
-### Step 2: Unlocking the ECM
-Launch Calterm and press F7 on the keyboard to remove the circle-slash from the Screwdriver symbol at the bottom of the screen
-Press F7 again to put the software in Edit mode
-If your ECM is unlocked properly, you will see a padlock that has been opened at the bottom of the screen
-### Step 3: Adding Engineering Security Key
-Choose the first blank spreadsheet-looking field in Screen0 and press F1
-Search for 'engr_sec' and check the little checkbox next to the '_Engr_Security_Key' parameter
-Choose 'Apply'
-### Step 4: Making Changes
-Make sure you have added all necessary parameters to Screen0 that you want to change
-Note that not all parameters are editable, so investigate thoroughly before making changes
-Many parameters are copies of others with different names, so be thoughtful and investigate thoroughly before choosing something to change or monitor
-When editing parameter values, the Value field will turn Yellow indicating there was a change
-### Step 5: Saving Changes
-Make your changes to all fields desired
-Use the 'Save' button at the top to commit the changes into temporary ram-space in the ECM
-The changes will stay until the power is cycled on the ECM (the key switch in the dash of the truck turned off, then on again)
-### Step 6: Uploading and Downloading Changes
-Set all changes you want to make using the 'Save' button
-Choose the 'Upload' function from the main menu
-Upload the file and save it as a CAL file
-Choose the 'Download' function to download the edited file back to the ECM
-The ECM will then have the edited file as its main Calibration file, and the changes will be permanent
-### Step 7: Using the Compare Tool
-If you get lost along the way using the compare tool, you can compare the module or new cal file to your original backup to see what changes you have made
 
-Some cool parameters to check/monitor while troubleshooting the engine or perhaps test driving the truck...
+After that I Re-ran Calterm and went to Options-> Security and chose Liscense file upgrade, and chose my hacked Calterm_3,lic file then upgraded. After that, all the options were now available in the left window. The next thing I did was get Calterm set up with my DLA. I went to Options->Datalink, and set up the DLA. In my case, I had to choose the following...
+```
+Protocol: J1939
+Adapter: RP1210a --< this is the correct setting for an INLINE-5 adapter.
+Vendor: Cummins Inc.
+Device: DeviceID-20,COM2,INLINE 4/5
+J1939 Tool Adress: 0x8A --< I changed the default so that there is no interference from other devices in my truck.
+```
+
+I saved the parameters and closed Calterm and before going any further, I ensured there was NO ECM passwords in the ECM by using the Insite Zappit software and deleting ALL ECM passwords including the OEM. I also recommend highly, that you use cummins Insite to print out ALL features and parameter for your vehicle BEFORE ANY SOFTWARE CHANGES OCCUR!!!. If you loose your settings, It is difficult to get them back, and usually requires some phone calls to a dealer or cummins themselves.
+I also ensured that I had the meta-file for my engine, or at least one that was close to my CM871. All meta-files are stored under the 'c:\Calterm III\ecfg' folder. For my engine, the closest one I found was done so by opening the files one at a time and reading the XML code at about line 11 or so. There is a line that that reads '<module_name>CM871</module_name>' for the correct file that goes to the CM871. The other files will read a different ECM type. I actually took the time to rename all the files in the folder so that I would not have to look inside them again to see what ECM they belonged to.
+At this point, I then ensured I was still connected with my cables and turned the truck key-switch to the ON position. The key-switch in the truck HAS TO BE ON to connect to the ECM, just like in the Insite software. Re-ran Calterm, and Chose 'Select Product' from the main menu. I chose 'Eagle-Red' from the menu as this is the closest product representation for my ISX Engine. Next I Chose 'Tools->Unlock'. I clicked on the 'Find devices' button, and ensured the 0x00 was listed in the device address box, then chose 'Display Cur. Status' and saw that the ECM security was set to Secure. I chose the button 'Switch', and it changed to 'Unsecured'. I then Chose 600D under module status and chose the 'Apply' button. For some reason, just choosing 'Switch' without re-applying the 600D option caused the ECM not to stay unlocked, but setting the 600D and Apply options made it stick.
+I closed the Unlock feature and chose 'Open Module'. At this point, I had to choose again 'Eagle Red' from the top list, then I selected the configuration file (the CM871 metafile I had found) from the file chooser, then hit 'Automatic'. I got a warning message for the config file not matching the actual module config, but the versions were very close. One ended in 0.33 and the actual module ended in 0.91 I think. This is perfectly ok. If you get an INLINE adapter firmware warning, then this is NOT ok. This will cause many problem when hacking the ECM, so correct the problem if you have to, or upgrade Calterm to match the INLINE firmware. My Inline frmware is 5.46 and my Calterm is 3.6.008 and they match. (Firmware 5.32 requires Calterm 3.6.007). When the screen opens all th way, then Press F7 on the keyboard to remove the circle-slash from the Screwdriver symbol at the bottom of the screen. This puts the software in Edit mode. If your ECM is unlocked properly and ready for editing (from using the Unlock Tool), then you will also see a symbol at the bottom of the screen that looks like a padlock that has been opened. If the padlock is closed, then you will have to use the Unlock Tool again to get it unlocked. The ECM MUST be unlocked before you can make ANY changes to it.
+With the ECM Unlocked, first thing is first. You need to add the Engineering Security Key as the first entry in screen0 to monitor. This will ensure later, when you make changes to the ECM that the Unlock setting gets saved to any CAL files you might create, as well as tell you its current state whenever you load or re-load a calibration. To do this, choose the first blank spreadsheet-looking field in screen0 and press F1. And search for 'engr_sec'. Check the little checkbox next to the '_Engr_Security_Key' paramater and choose 'Apply'. Going back to Screen0 should now show the paramater in the first field and also show 'UNLOCKED' for its current setting. If this is the case, then you are good to go for editing the Module.
+MAKE A BACKUP FILE FIRST! Choose 'Upload' from the main menu and make a backup of your ECM before going any further. This will ensure you can recover from a failed download, or a parameter change that might corrupt the ECM. During the Upload / Download process, it is not unusual to get some alarms on the dash of the truck. This is because the ECM is put in boot-loader mode and taken out of Application mode during the upload.
+After the upload is done, add parameters to Screen0 that you want to change. Note that not all parameters are editable. Many parameters are hard-coded, but this really doesn't limit you much because somewhere else in the thousands of parameters is the bypass, or actual editable setting to replace it. One thing that helped me in finding editable parameters is the descriptions. Just about any description that has the words 'Tells the Tool', or 'informs the Tool' are NOT editable. These are output parameters only that actually are just Outputs of other settings and results. Many of the variable names include prefixes to indicate their functions, For example, C_ indicates a user-adjustable control, and T_ indicates a control toggle. EMO_ indicates a function related to emissions management. There are many other prefixes, and learning what they mean by studying the comments is very helpful. Many parameters are Copies of others with a different name, so be thoughtful and investigate thoroughly before choosing something to change or monitor. Anyways, When you have some parameters selected and you Edit their value, If the ECM will let you change them, then the Value field will turn Yellow indicating there was a change. Make your changes to all fields desired, then use the 'Save' button at the top to actually commit them into temporary ram-space in the ECM. These changes will stay until the power is cycled on the ECM (the keyswitch in the dash of the truck turned off, then on a again). This makes it easy to change something and then test it without screwing up your ECM.
+To permanently change something, you need to get a little creative. First, Set all the changes you want to make, Then use the 'Save' button to send them to the ECM, then Choose the 'Upload' function from the main menu. Upload the file and save it as a CAL file. After that, You will need to choose 'Download' to Download it BACK to the ECM. The ECM will then have the edited file as its main Calibration file and the changes will then be permanent. You can compare the module, or the new cal file to your original backup to see what changes you have made if you get lost along the way using the compare tool. 
+If you decide for some reason to hack a .ecfg or .cal file directly then there is a tool to Re-certify the file's CRC. Just choose 'CRC Files' from the main menu and select the hacked .ecfg or .cal file and then add them to the list and choose ok. They will be updated with the new CRC info permanently. I hacked my .ecfg to make it match my exact engine calibration software version to eliminate the warning messages whenever I opened the Module Editor this way.
+
+
+Some cool parameters to check/monitor while troubleshooting the engine or perhaps test driving the
+truck...
 ```
 EGA_DL_Engine_Speed - The current live RPM of the engine.
 Final_Timing - The current live engine Timing (0.0 = 7.01 TDC)
@@ -91,7 +77,7 @@ ENGN_Final_Torque_Cmd - The current live torque load on the engine.
 ```
 ## Derates and Engine Protection Shutdowns...
 There are tons of parameters that deal with derates and engine shutdowns. Searching parameter names that include 'DRT' or 'EPD' in the name are almost always related to derates. Some derates will cause an alarm in the dash, but there are many that are silent. Silent derates are in place to protect the limits of the engine components and happen on a regular basis as a normal part of engine operation. The consequences of turning them off may be severe, depending on what it might be, if the driver of the truck is not aware that those components can now be pushed beyond their intended limits. Disabling ALL derates will improve performance and fuel mileage for the engine, and because I drive my own truck, and no one else does, I disabled them ALL rather than try and sort them out.
-Engine protection shutdowns can also be eliminated so that when a shutdown alarm occurs, then engine will not be affected by it. The bad thing, is that if your engine runs out of oil, it can destroy itself in short order, but the good thing is that you can bypass or unplug a component or sensor that may have failed, like your EGR valve, or DPF can without it shutting you down. Firetrucks', school buses and other emergency vehicles are often set this way so that in an emergency, the vehicle can still be moved. Here is the map to disable all derates and shutdowns...
+Engine protection shutdowns can also be eliminated so that when a shutdown alarm occurs, then engine will not be effected by it. The bad thing, is that if your engine runs out of oil, it can destroy itself in short order, but the good thing is that you can bypass or unplug a component or sensor that may have failed, like your EGR valve, or DPF can without it shutting you down. Firetrucks, school buses and other emergency vehicles are often set this way so that in an emergency, the vehicle can still be moved. Here is the map to disable all derates and shutdowns...
 Disable Engine Protections and Shutdowns…
 ```
 C_AIF_AlphaAltDerateOvrEn 1
